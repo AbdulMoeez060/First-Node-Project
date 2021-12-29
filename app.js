@@ -11,7 +11,8 @@ const app = express();
 app.engine('handlebars',expressHbs());//initialize the handle bars
 
 //app.set('view engine','pug');//pug is built  in
-app.set('view engine','handlebars');//pug is built  in
+//app.set('view engine','handlebars');//pug is built  in
+app.set('view engine','ejs');//pug is built  in
 
 app.set('views','views');
 
