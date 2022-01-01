@@ -1,7 +1,6 @@
 //const products=[];
 const path = require("path");
 const fs = require("fs");
-const { runInThisContext } = require("vm");
 const p = path.join(
   path.dirname(require.main.filename),
   "data",
@@ -25,7 +24,7 @@ module.exports = class Product {
   }
   save() {
     // products.push(this);
-
+    this.id=Math.random().toString();
     getProductsFromFile((products) => {
       products.push(this);
       fs.writeFile(p, JSON.stringify(products), (err) => {
@@ -36,5 +35,13 @@ module.exports = class Product {
   static fetchAll(cb) {
     //return products;
     getProductsFromFile(cb);
+  }
+
+  static findbyid(id,cb){
+    getProductsFromFile(products=>{
+      const product= products.find(p=> p.id===id);
+      cb(product);
+    });
+
   }
 };

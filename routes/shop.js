@@ -10,6 +10,10 @@ const router = express.Router();
 router.get('/',shopsController.getIndex);
 
 router.get('/products',shopsController.getProducts);
+
+router.get('/products/:productId',shopsController.getProduct);//: is used to send the parameter
+
+
 router.get('/cart',shopsController.getCart);
 router.get('/orders',shopsController.getOrders);
 

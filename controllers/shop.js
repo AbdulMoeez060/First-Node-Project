@@ -13,6 +13,16 @@ exports.getProducts = (req, res, next) => {
   //console.log("shop js",product);//we dont do this as this will be shared in all user in the server
   // res.sendFile(path.join(rootDir,'views','shop.html'));//for making out paths as path system is different on windows and linux
 };
+
+exports.getProduct = (req,res,next)=>{
+  const productId=req.params.productId; //product id is the parameter that we passed from the /products/":productId"
+  //console.log(Product.findbyid(productId,product=>{}));\
+  Product.findbyid(productId,product=>{
+    res.render('shop/product-detail',{product:product,pageTitle:product.title,path:'/products'});
+
+  });
+}
+
 exports.getIndex = (req, res, next) => {
     Product.fetchAll((product) => {
         res.render("shop/index", {
