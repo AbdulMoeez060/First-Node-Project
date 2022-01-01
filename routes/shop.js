@@ -15,6 +15,9 @@ router.get('/products/:productId',shopsController.getProduct);//: is used to sen
 
 
 router.get('/cart',shopsController.getCart);
+
+router.post('/cart',shopsController.postCart);
+
 router.get('/orders',shopsController.getOrders);
 
 router.get('/checkout',shopsController.getCheckout);
