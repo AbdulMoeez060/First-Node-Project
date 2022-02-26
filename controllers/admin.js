@@ -10,17 +10,18 @@ exports.getAddProduct = (req, res, next) => {
 };
 //const products= [];
 exports.postAddProduct = (req, res, next) => {
-  const product = new Product(
-    null,
-    req.body.title,
-    req.body.imageUrl,
-    req.body.description,
-    req.body.price
-  );
-  product.save().then(() =>{
-    res.redirect("/");
+  
+  const title=  req.body.title;
+  const imageUrl = req.body.imageUrl;
+  const description = req.body.description;
+  const price=  req.body.price;
 
-  }).catch(err => console.log(err));
+  Product.create({
+    title: title,
+    price: price,
+    imageUrl: imageUrl,
+    description: description
+  }).then().catch(err=>console.log(err));
   //products.push({title: req.body.title});
 };
 
