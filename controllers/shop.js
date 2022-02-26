@@ -2,40 +2,50 @@ const Product = require("../models/product");
 const Cart = require("../models/cart");
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll((product) => {
+  Product.fetchAll().then(([rows,fieldData])=>{
     res.render("shop/product-list", {
-      prods: product,
+      prods: rows,
       pageTitle: "All Products",
       path: "/products",
-      hasProds: product.length > 0,
     }); //for rendering pug
+
+  })
+  .catch(err=>{
+    console.log(err);
   });
+  
   //console.log("Another Middleware");
   //console.log("shop js",product);//we dont do this as this will be shared in all user in the server
   // res.sendFile(path.join(rootDir,'views','shop.html'));//for making out paths as path system is different on windows and linux
 };
 
 exports.getProduct = (req, res, next) => {
-  const productId = req.params.productId; //product id is the parameter that we passed from the /products/":productId"
+  const prodId = req.params.productId; //product id is the parameter that we passed from the /products/":productId"
   //console.log(Product.findbyid(productId,product=>{}));\
-  Product.findbyid(productId, (product) => {
+  Product.findbyid(prodId)
+  .then(([product])=>{
     res.render("shop/product-detail", {
-      product: product,
-      pageTitle: product.title,
+      product: product[0],
+      pageTitle: product[0].title,
       path: "/products",
     });
-  });
+
+  }).catch(err=>console.log(err));
 };
 
 exports.getIndex = (req, res, next) => {
-  Product.fetchAll((product) => {
+  Product.fetchAll()
+  .then(([rows,fieldData])=>{
     res.render("shop/index", {
-      prods: product,
+      prods: rows,
       pageTitle: "Shop",
       path: "/",
-      hasProds: product.length > 0,
-    }); //for rendering pug
-  });
+    }); 
+
+  })
+  .catch(err=>{
+    console.log(err);
+  })
 };
 
 exports.getCart = (req, res, next) => {
