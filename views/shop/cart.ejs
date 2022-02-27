@@ -9,7 +9,7 @@
 
                 <ul>
                     <% products.forEach(p=>{ %>
-                        <li>
+                        <li class="cartProd">
                             <h1><%= p.title %></h1>
                             <h2>Quantity: <%= p.cartItem.quantity %> </h2>
                             <form action="/cart-delete-item" method="POST">
@@ -20,6 +20,12 @@
                     <% }) %>
 
                 </ul>
+                <hr>
+                <div class="centered">
+                    <form action="create-order" method="POST" >
+                        <button class="btn" type="submit">Order Now!!</button>
+                    </form>
+                </div>
 
             <% } else{ %>
                 <h1>NO Products in Cart</h1>

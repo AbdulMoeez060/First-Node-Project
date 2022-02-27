@@ -211,3 +211,12 @@ form {
 .centered{
   text-align: center;
 }
+.cartProd{
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  border: 1px solid #00695c;
+  margin: 3% 10%;
+  border-radius: 10px;
+}
