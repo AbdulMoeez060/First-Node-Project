@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const adminRoutes = require("./routes/admin");
-//const shopRoutes = require("./routes/shop");
+const shopRoutes = require("./routes/shop");
 const errorController = require("./controllers/error");
 //const expressHbs = require("express-handlebars");
 const path = require("path");
@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname, "public"))); //used to make css stat
 
 app.use("/admin", adminRoutes);
 
-//app.use(shopRoutes);
+app.use(shopRoutes);
 
 app.use(errorController.get404);
 
