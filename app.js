@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public"))); //used to make css statically accessible
 
 app.use((req,res,next)=>{
-  User.findById("621f50de7a1a9c9545aeb98d").then(user=>{
+  User.findById("621fa3c014cda1788ca09113").then(user=>{
     req.user= new User(user.name,user.email,user.cart,user._id);
     next();
   }).catch(err=>console.log(err));
