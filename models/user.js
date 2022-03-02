@@ -62,10 +62,25 @@ class User {
             ...p,
             quantity: this.cart.items.find((i) => {
               return i.productId.toString() === p._id.toString();
-            }).quantity
+            }).quantity,
           };
         });
       });
+  }
+
+  deleteItemFromCart(productId) {
+    const updatedCartItems = this.cart.items.filter((i) => {
+      return i.productId.toString() !== productId.toString();
+    });
+    //console.log(updatedCartItems);
+
+    const db = getDb();
+    return db
+      .collection("users")
+      .updateOne(
+        { _id: new mongodb.ObjectId(this._id) },
+        { $set: { cart: { items: updatedCartItems } } }
+      );
   }
 
   static findById(userId) {
