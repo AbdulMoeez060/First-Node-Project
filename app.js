@@ -7,6 +7,7 @@ const errorController = require("./controllers/error");
 //const expressHbs = require("express-handlebars");
 const path = require("path");
 const {mongoConnect} = require("./utils/database");
+const User = require("./models/user");
 
 
 const app = express();
@@ -23,12 +24,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "public"))); //used to make css statically accessible
 
-// app.use((req,res,next)=>{
-//   User.findByPk(1).then(user=>{
-//     req.user=user;
-//     next();
-//   }).catch(err=>console.log(err));
-// })
+app.use((req,res,next)=>{
+  User.findById("621f50de7a1a9c9545aeb98d").then(user=>{
+    req.user=user;
+    next();
+  }).catch(err=>console.log(err));
+})
 
 app.use("/admin", adminRoutes);
 
