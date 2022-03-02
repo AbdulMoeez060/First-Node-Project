@@ -19,7 +19,9 @@ class User {
     return db
       .collection("users")
       .findOne({ _id: new mongodb.ObjectId(userId) })
-      .then((result) => console.log(result))
+      .then((user) => {
+        return user;
+      })
       .catch((err) => console.log(err));
   }
 }
