@@ -7,22 +7,22 @@ const shopsController= require("../controllers/shop");
 const router = express.Router();
 
 
-router.get('/',shopsController.getIndex);
+// router.get('/',shopsController.getIndex);
 
-router.get('/products',shopsController.getProducts);
+// router.get('/products',shopsController.getProducts);
 
-router.get('/products/:productId',shopsController.getProduct);//: is used to send the parameter
+// router.get('/products/:productId',shopsController.getProduct);//: is used to send the parameter
 
 
-router.get('/cart',shopsController.getCart);
+// router.get('/cart',shopsController.getCart);
 
-router.post('/cart',shopsController.postCart);
+// router.post('/cart',shopsController.postCart);
 
-router.post('/cart-delete-item',shopsController.postCartDeleteProduct);
+// router.post('/cart-delete-item',shopsController.postCartDeleteProduct);
 
-router.post('/create-order',shopsController.postOrder);
+// router.post('/create-order',shopsController.postOrder);
 
-router.get('/orders',shopsController.getOrders);
+// router.get('/orders',shopsController.getOrders);
 
 // router.get('/checkout',shopsController.getCheckout);
 

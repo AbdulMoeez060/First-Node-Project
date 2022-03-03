@@ -6,9 +6,8 @@ const shopRoutes = require("./routes/shop");
 const errorController = require("./controllers/error");
 //const expressHbs = require("express-handlebars");
 const path = require("path");
-const {mongoConnect} = require("./utils/database");
 const User = require("./models/user");
-
+const { default: mongoose } = require("mongoose");
 
 const app = express();
 
@@ -24,12 +23,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "public"))); //used to make css statically accessible
 
-app.use((req,res,next)=>{
-  User.findById("621fa3c014cda1788ca09113").then(user=>{
-    req.user= new User(user.name,user.email,user.cart,user._id);
-    next();
-  }).catch(err=>console.log(err));
-})
+app.use((req, res, next) => {
+  User.findById("621fa3c014cda1788ca09113")
+    .then((user) => {
+      req.user = new User(user.name, user.email, user.cart, user._id);
+      next();
+    })
+    .catch((err) => console.log(err));
+});
 
 app.use("/admin", adminRoutes);
 
@@ -37,8 +38,11 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-mongoConnect(()=>{
-  
-  app.listen(3000);
-})
-
+mongoose
+  .connect(
+    "mongodb+srv://moeez2:moeez@cluster0.drot1.mongodb.net/shop?retryWrites=true&w=majority"
+  )
+  .then((result) => {
+    app.listen(3000);
+  })
+  .catch((err) => console.log(err));
