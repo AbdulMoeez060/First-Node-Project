@@ -7,9 +7,9 @@ const shopsController= require("../controllers/shop");
 const router = express.Router();
 
 
-// router.get('/',shopsController.getIndex);
+router.get('/',shopsController.getIndex);
 
-// router.get('/products',shopsController.getProducts);
+router.get('/products',shopsController.getProducts);
 
 // router.get('/products/:productId',shopsController.getProduct);//: is used to send the parameter
 
