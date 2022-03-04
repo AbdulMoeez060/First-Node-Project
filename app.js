@@ -23,14 +23,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "public"))); //used to make css statically accessible
 
-// app.use((req, res, next) => {
-//   User.findById("621fa3c014cda1788ca09113")
-//     .then((user) => {
-//       req.user = new User(user.name, user.email, user.cart, user._id);
-//       next();
-//     })
-//     .catch((err) => console.log(err));
-// });
+app.use((req, res, next) => {
+  User.findById("6221fa99dac3edaf663e5fbf")
+    .then((user) => {
+      req.user = user;
+      next();
+    })
+    .catch((err) => console.log(err));
+});
 
 app.use("/admin", adminRoutes);
 
@@ -43,6 +43,17 @@ mongoose
     "mongodb+srv://moeez2:moeez@cluster0.drot1.mongodb.net/shop?retryWrites=true&w=majority"
   )
   .then((result) => {
+    User.findOne().then(user=>{
+      if (!user) {
+        const user = new User({
+          name: "Moeez",
+          email: "moeez@gmail.com",
+          cart: { items: [] },
+        });
+        user.save();
+        
+      }
+    })
     app.listen(3000);
   })
   .catch((err) => console.log(err));
