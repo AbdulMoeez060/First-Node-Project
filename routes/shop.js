@@ -22,7 +22,7 @@ router.post('/cart-delete-item',shopsController.postCartDeleteProduct);
 
 router.post('/create-order',shopsController.postOrder);
 
-//router.get('/orders',shopsController.getOrders);
+router.get('/orders',shopsController.getOrders);
 
 // router.get('/checkout',shopsController.getCheckout);
 
