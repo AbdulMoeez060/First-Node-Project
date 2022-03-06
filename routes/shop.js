@@ -14,11 +14,11 @@ router.get('/products',shopsController.getProducts);
 router.get('/products/:productId',shopsController.getProduct);//: is used to send the parameter
 
 
-// router.get('/cart',shopsController.getCart);
+router.get('/cart',shopsController.getCart);
 
 router.post('/cart',shopsController.postCart);
 
-// router.post('/cart-delete-item',shopsController.postCartDeleteProduct);
+router.post('/cart-delete-item',shopsController.postCartDeleteProduct);
 
 // router.post('/create-order',shopsController.postOrder);
 
