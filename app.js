@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const session = require('express-session');
 
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
@@ -24,6 +25,7 @@ app.set("views", "views");
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "public"))); //used to make css statically accessible
+app.use(session({secret:'my secret', resave: false, saveUninitialized:false}))
 
 app.use((req, res, next) => {
   User.findById("6221fa99dac3edaf663e5fbf")
