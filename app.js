@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const session = require('express-session');
+const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session); // returns a store constructer func
 
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
@@ -10,9 +11,15 @@ const errorController = require("./controllers/error");
 //const expressHbs = require("express-handlebars");
 const path = require("path");
 const User = require("./models/user");
+const MONGODB_URI =
+  "mongodb+srv://moeez2:moeez@cluster0.drot1.mongodb.net/shop?retryWrites=true&w=majority";
 const { default: mongoose } = require("mongoose");
 
 const app = express();
+const store = new MongoDBStore({
+  uri: MONGODB_URI,
+  collection: "sessions", //parameters
+});
 
 //app.engine("handlebars", expressHbs()); //initialize the handle bars
 
@@ -25,7 +32,14 @@ app.set("views", "views");
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "public"))); //used to make css statically accessible
-app.use(session({secret:'my secret', resave: false, saveUninitialized:false}))
+app.use(
+  session({
+    secret: "my secret",
+    resave: false,
+    saveUninitialized: false,
+    store: store,//alwayes use session store like this mongostore
+  })
+);
 
 app.use((req, res, next) => {
   User.findById("6221fa99dac3edaf663e5fbf")
@@ -36,22 +50,18 @@ app.use((req, res, next) => {
     .catch((err) => console.log(err));
 });
 
-
 app.use("/admin", adminRoutes);
 
 app.use(shopRoutes);
 
 app.use(authRoutes);
 
-
 app.use(errorController.get404);
 
 mongoose
-  .connect(
-    "mongodb+srv://moeez2:moeez@cluster0.drot1.mongodb.net/shop?retryWrites=true&w=majority"
-  )
+  .connect(MONGODB_URI)
   .then((result) => {
-    User.findOne().then(user=>{
+    User.findOne().then((user) => {
       if (!user) {
         const user = new User({
           name: "Moeez",
@@ -59,9 +69,8 @@ mongoose
           cart: { items: [] },
         });
         user.save();
-        
       }
-    })
+    });
     app.listen(3000);
   })
   .catch((err) => console.log(err));

@@ -13,5 +13,7 @@ exports.postLogin = (req, res, next) => {
   //res.setHeader("Set-Cookie", "loggedIn=true"); //cookies can used to track how long user has been on te site and we can send cookies to other pages to track user we can also configure cookies like when will it expire
   req.session.isLoggedIn = true; //we use the sessuin obect made by session middleware and we can add any value like isloggedin
   //this session is saved in browser so no matter which request we send in the logged in browser the session will be active and cookie will be available
+  //this session is stored in memory and its ok for development but in prod we have to store in db
+  //we will use mongo
   res.redirect("/");
 };
