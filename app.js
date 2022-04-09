@@ -37,18 +37,20 @@ app.use(
     secret: "my secret",
     resave: false,
     saveUninitialized: false,
-    store: store,//alwayes use session store like this mongostore
+    store: store,//alwayes use session store like this mongostore we can also store our cart in session
   })
 );
 
-app.use((req, res, next) => {
-  User.findById("6221fa99dac3edaf663e5fbf")
-    .then((user) => {
-      req.user = user;
-      next();
-    })
-    .catch((err) => console.log(err));
-});
+
+//Removing this and adding user when one logs in in auth.js controller
+// app.use((req, res, next) => {
+//   User.findById("6221fa99dac3edaf663e5fbf")
+//     .then((user) => {
+//       req.user = user;
+//       next();
+//     })
+//     .catch((err) => console.log(err));
+// });
 
 app.use("/admin", adminRoutes);
 
