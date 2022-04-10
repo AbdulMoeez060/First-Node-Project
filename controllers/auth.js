@@ -22,9 +22,16 @@ exports.postLogin = (req, res, next) => {
     .then((user) => {
       req.session.isLoggedIn = true;
       req.session.user = user;// make a new session cookie named user in express session
-      console.log(req.session.user)
+      //console.log(req.session.user)
       res.redirect("/");
       
     })
     .catch((err) => console.log(err));
 };
+
+exports.postLogout = (req,res,next)=>{
+  req.session.destroy((err)=>{//destroy the session when logout
+    console.log(err)
+    res.redirect('/');
+  });
+}
