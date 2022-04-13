@@ -37,20 +37,25 @@ app.use(
     secret: "my secret",
     resave: false,
     saveUninitialized: false,
-    store: store,//alwayes use session store like this mongostore we can also store our cart in session
-  })
+    store: store, //alwayes use session store like this mongostore we can also store our cart in session
+  }) // we get the user n auth.js but it only gets the info not the whole user with fuctions like 11
 );
 
+//Removing this and adding user when one logs in in auth.js controller and the adding again to get the user methods
+app.use((req, res, next) => {//11 this gets whole user with methods with every request
+  
+  if (!req.session.user) {
+    return next;
+  }
 
-//Removing this and adding user when one logs in in auth.js controller
-// app.use((req, res, next) => {
-//   User.findById("6221fa99dac3edaf663e5fbf")
-//     .then((user) => {
-//       req.user = user;
-//       next();
-//     })
-//     .catch((err) => console.log(err));
-// });
+  User.findById(req.session.user)
+    .then((user) => {
+      req.user = user;
+
+      next();
+    })
+    .catch((err) => console.log(err));
+});
 
 app.use("/admin", adminRoutes);
 
